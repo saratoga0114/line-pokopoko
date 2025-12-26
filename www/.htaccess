@@ -22,15 +22,21 @@ RewriteRule ^$ index.html [L]
 # ----------------------------------------------------
 # 3. /post 以下のアクセス
 # ----------------------------------------------------
-# /post または /post/ にアクセスがあったら post/index.html を表示
-RewriteRule ^post/?$ post/index.html [L]
+# /post または /post/ にアクセスがあったらトップへリダイレクト
+RewriteRule ^post/?$ / [R=301,L]
 
 # /post/xxx にアクセスがあったら post/xxx.html を表示
 # （.html が既に付いている場合は除外）
 RewriteRule ^post/([^/.]+)$ post/$1.html [L]
 
 # ----------------------------------------------------
-# 4. /battle 以下のアクセス
+# 4. /sitemap へのアクセス
+# ----------------------------------------------------
+# /sitemap にアクセスがあったら sitemap.xml を表示
+RewriteRule ^sitemap$ sitemap.xml [L]
+
+# ----------------------------------------------------
+# 5. /battle 以下のアクセス
 # ----------------------------------------------------
 # /battle または /battle/ にアクセスがあったら battle/index.html を表示
 RewriteRule ^battle/?$ battle/index.html [L]
@@ -40,7 +46,7 @@ RewriteRule ^battle/?$ battle/index.html [L]
 RewriteRule ^battle/([^/.]+)$ battle/$1.html [L]
 
 # ----------------------------------------------------
-# 5. /nameko 以下のアクセス
+# 6. /nameko 以下のアクセス
 # ----------------------------------------------------
 # /nameko または /nameko/ にアクセスがあったら nameko/index.html を表示
 RewriteRule ^nameko/?$ nameko/index.html [L]
