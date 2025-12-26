@@ -1,4 +1,5 @@
 # mod_rewrite エンジンを有効化
+<IfModule mod_rewrite.c>
 RewriteEngine On
 
 # ----------------------------------------------------
@@ -16,28 +17,32 @@ RewriteRule ^ - [L]
 # 2. ルートパス / へのアクセス
 # ----------------------------------------------------
 # ドメイン直下 (https://example.com/) にアクセスがあったら index.html を表示
-# URLパスが空か、スラッシュのみの場合
 RewriteRule ^$ index.html [L]
 
 # ----------------------------------------------------
-# 3. /post/ 以下のアクセス
+# 3. /post 以下のアクセス
 # ----------------------------------------------------
+# /post または /post/ にアクセスがあったら post/index.html を表示
+RewriteRule ^post/?$ post/index.html [L]
+
 # /post/xxx にアクセスがあったら post/xxx.html を表示
-# $1 に xxx が入る
-RewriteRule ^post/(.+)$ post/$1.html [L]
+# （.html が既に付いている場合は除外）
+RewriteRule ^post/([^/.]+)$ post/$1.html [L]
 
 # ----------------------------------------------------
 # 4. /battle 以下のアクセス
 # ----------------------------------------------------
-
-# /battle にアクセスがあったら battle/index.html を表示
-# 末尾にスラッシュがない場合（/battle）
-RewriteRule ^battle$ battle/index.html [L]
-
-# /battle/ にアクセスがあったら battle/index.html を表示
-# 末尾にスラッシュがある場合（/battle/）
-RewriteRule ^battle/$ battle/index.html [L]
+# /battle または /battle/ にアクセスがあったら battle/index.html を表示
+RewriteRule ^battle/?$ battle/index.html [L]
 
 # /battle/xxx にアクセスがあったら battle/xxx.html を表示
-# $1 に xxx が入る
-RewriteRule ^battle/(.+)$ battle/$1.html [L]
+# （.html が既に付いている場合は除外）
+RewriteRule ^battle/([^/.]+)$ battle/$1.html [L]
+
+# ----------------------------------------------------
+# 5. /nameko 以下のアクセス
+# ----------------------------------------------------
+# /nameko または /nameko/ にアクセスがあったら nameko/index.html を表示
+RewriteRule ^nameko/?$ nameko/index.html [L]
+
+</IfModule>
