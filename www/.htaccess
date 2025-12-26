@@ -1,0 +1,43 @@
+# mod_rewrite エンジンを有効化
+RewriteEngine On
+
+# ----------------------------------------------------
+# 1. 実際のファイル/ディレクトリが存在する場合は処理をスキップ
+# ----------------------------------------------------
+# 存在するファイル（css, image, js フォルダ内のファイルなど）へのアクセスはリライトしない
+RewriteCond %{REQUEST_FILENAME} -f
+RewriteRule ^ - [L]
+
+# 存在するディレクトリへのアクセスはリライトしない
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# ----------------------------------------------------
+# 2. ルートパス / へのアクセス
+# ----------------------------------------------------
+# ドメイン直下 (https://example.com/) にアクセスがあったら index.html を表示
+# URLパスが空か、スラッシュのみの場合
+RewriteRule ^$ index.html [L]
+
+# ----------------------------------------------------
+# 3. /post/ 以下のアクセス
+# ----------------------------------------------------
+# /post/xxx にアクセスがあったら post/xxx.html を表示
+# $1 に xxx が入る
+RewriteRule ^post/(.+)$ post/$1.html [L]
+
+# ----------------------------------------------------
+# 4. /battle 以下のアクセス
+# ----------------------------------------------------
+
+# /battle にアクセスがあったら battle/index.html を表示
+# 末尾にスラッシュがない場合（/battle）
+RewriteRule ^battle$ battle/index.html [L]
+
+# /battle/ にアクセスがあったら battle/index.html を表示
+# 末尾にスラッシュがある場合（/battle/）
+RewriteRule ^battle/$ battle/index.html [L]
+
+# /battle/xxx にアクセスがあったら battle/xxx.html を表示
+# $1 に xxx が入る
+RewriteRule ^battle/(.+)$ battle/$1.html [L]
